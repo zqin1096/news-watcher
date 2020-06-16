@@ -5,5 +5,6 @@
     <file url="PROJECT" libraries="{@types/express, news-watcher/node_modules}" />
     <includedPredefinedLibrary name="HTTP Response Handler" />
     <includedPredefinedLibrary name="Node.js Core" />
+    <excludedPredefinedLibrary name="news-watcher/client/node_modules" />
   </component>
 </project>
