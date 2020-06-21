@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import AsyncSelect from 'react-select/async';
-import classes from './NavigationBar.module.css';
 import {BsBookmark} from 'react-icons/bs'; // Bookmark icon.
 import {IconContext} from "react-icons"; // Used to style the react icons.
 import Switch from 'react-switch';
@@ -10,6 +9,7 @@ import Switch from 'react-switch';
 // to the rendered element when it matches the current URL.
 import {NavLink} from 'react-router-dom';
 import axios from 'axios';
+import classes from './NavigationBar.module.css';
 
 const NavigationBar = () => {
     const [checked, setChecked] = useState(true);
@@ -40,10 +40,16 @@ const NavigationBar = () => {
         }
     };
 
+    // The react-select onChange event is fired when an option is selected.
+    const onChange = (selectedOption) => {
+        console.log(selectedOption.value);
+    };
+
     return (
         // expand is the breakpoint, below which, the Navbar will collapse.
         <Navbar expand="lg" className={classes.bg}>
             <AsyncSelect
+                onChange={onChange}
                 cacheOptions
                 loadOptions={loadOptions}
                 placeholder="Enter keyword .."
@@ -51,17 +57,24 @@ const NavigationBar = () => {
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
                     <NavLink to="/"
-                             className={classes.link}>Home</NavLink>
+                             exact
+                             className={classes.link}
+                             activeClassName={classes.selected}>Home</NavLink>
                     <NavLink to="/world"
-                             className={classes.link}>World</NavLink>
+                             className={classes.link}
+                             activeClassName={classes.selected}>World</NavLink>
                     <NavLink to="/politics"
-                             className={classes.link}>Politics</NavLink>
+                             className={classes.link}
+                             activeClassName={classes.selected}>Politics</NavLink>
                     <NavLink to="business"
-                             className={classes.link}>Business</NavLink>
+                             className={classes.link}
+                             activeClassName={classes.selected}>Business</NavLink>
                     <NavLink to="/technology"
-                             className={classes.link}>Technology</NavLink>
+                             className={classes.link}
+                             activeClassName={classes.selected}>Technology</NavLink>
                     <NavLink to="/sports"
-                             className={classes.link}>Sports</NavLink>
+                             className={classes.link}
+                             activeClassName={classes.selected}>Sports</NavLink>
                 </Nav>
                 <Nav>
                     <Nav.Item className={classes.navItem}>
