@@ -10,9 +10,8 @@ import classes from './Headlines.module.css';
 const Headlines = (props) => {
     const {section} = props.match.params;
     useEffect(() => {
-        console.log(section);
-        props.getArticles(section === 'sports' ? 'sport' : section);
-    }, [section]);
+        props.getArticles(section, props.news.isChecked);
+    }, [section, props.news.isChecked]);
     if (section !== undefined &&
         section !== 'world' &&
         section !== 'politics' &&
@@ -32,7 +31,10 @@ const Headlines = (props) => {
             :
             <Container fluid className={classes.headlines}>
                 {props.news.articles.map((article) => {
-                    return <HeadlineItem key={article.id} article={article}/>
+                    return <HeadlineItem
+                        key={article.id}
+                        article={article}
+                        isChecked={props.news.isChecked}/>
                 })}
             </Container>
     )

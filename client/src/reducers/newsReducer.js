@@ -1,8 +1,9 @@
-import {GET_ARTICLES, SET_LOADING} from '../actions/types';
+import {GET_ARTICLES, SET_CHECKED, SET_LOADING} from '../actions/types';
 
 const initialState = {
     articles: [],
     article: null,
+    isChecked: true,
     loading: false,
     error: null
 }
@@ -20,6 +21,11 @@ export default (state = initialState, action) => {
                 articles: action.payload,
                 loading: false
             };
+        case SET_CHECKED:
+            return {
+                ...state,
+                isChecked: action.payload
+            }
         default:
             return state;
     }

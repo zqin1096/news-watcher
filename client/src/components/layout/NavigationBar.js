@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import AsyncSelect from 'react-select/async';
@@ -10,9 +10,11 @@ import Switch from 'react-switch';
 import {NavLink} from 'react-router-dom';
 import axios from 'axios';
 import classes from './NavigationBar.module.css';
+import {connect} from 'react-redux';
+import {toggleSwitch} from '../../actions/newsAction';
 
-const NavigationBar = () => {
-    const [checked, setChecked] = useState(true);
+const NavigationBar = (props) => {
+    console.log(props.isChecked);
 
     const loadOptions = (inputValue, callback) => {
         if (!inputValue) {
@@ -86,9 +88,9 @@ const NavigationBar = () => {
                     <Nav.Item className={classes.navItem}>NYTimes</Nav.Item>
                     <Nav.Item className={classes.navItem}>
                         <Switch
-                            checked={checked}
+                            checked={props.isChecked}
                             onChange={(checked) => {
-                                setChecked(checked);
+                                props.toggleSwitch(checked);
                             }}
                             onColor="#4696EC"
                             checkedIcon={false}
@@ -102,4 +104,10 @@ const NavigationBar = () => {
     )
 };
 
-export default NavigationBar;
+const mapStateToProps = (state) => {
+    return {
+        isChecked: state.news.isChecked
+    }
+}
+
+export default connect(mapStateToProps, {toggleSwitch})(NavigationBar);

@@ -5,20 +5,17 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col'
 import Badge from 'react-bootstrap/Badge'
 import GuardianDefault from '../layout/guardian_default.png';
+import NytimesDefault from '../layout/nytimes_default.jpg';
 import Shiitake from 'shiitake';
 import Moment from 'react-moment';
-import classes from './HeadlineItem.module.css'
+import classes from './HeadlineItem.module.css';
 
 const HeadlineItem = (props) => {
-    const article = props.article;
-    // Check if all the keys exist and are not null or undefined.
-    const assets = article.hasOwnProperty('blocks') && article.blocks &&
-    article.blocks.hasOwnProperty('main') && article.blocks.main &&
-    article.blocks.main.hasOwnProperty('elements') && article.blocks.main.elements &&
-    article.blocks.main.elements[0].hasOwnProperty('assets') && article.blocks.main.elements[0].assets ?
-        article.blocks.main.elements[0].assets : null;
-    const asset = assets ? assets[assets.length - 1] : null;
-    const image = asset ? asset.file : GuardianDefault;
+    const image = (props.article.image) ? props.article.image :
+        (props.isChecked) ? GuardianDefault : NytimesDefault;
+    const section = props.article.section === 'sport' ? 'sports' : props.article.section;
+    const style = section === 'world' || section === 'politics' || section === 'business' ||
+    section === 'technology' || section === 'sports' ? section : 'other';
 
     return (
         <Card className="shadow-sm p-3 mb-5 bg-white rounded">
@@ -28,16 +25,16 @@ const HeadlineItem = (props) => {
                 </Col>
                 <Col xs={12} lg={9}>
                     <Card.Body>
-                        <Card.Title>{article.webTitle}</Card.Title>
+                        <Card.Title>{props.article.title}</Card.Title>
                         <Card.Text>
                             <Shiitake lines={3}>
-                                {article.blocks.body[0].bodyTextSummary}
+                                {props.article.description}
                             </Shiitake>
                         </Card.Text>
                         <Moment
-                            format="YYYY-MM-DD">{article.webPublicationDate}</Moment>
+                            format="YYYY-MM-DD">{props.article.date}</Moment>
                         <h5 className="float-right"><Badge
-                            className={classes[`${article.sectionId}`]}>{article.sectionId.toUpperCase()}</Badge>
+                            className={classes[`${style}`]}>{section.toUpperCase()}</Badge>
                         </h5>
                     </Card.Body>
                 </Col>
