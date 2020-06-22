@@ -14,7 +14,6 @@ import {connect} from 'react-redux';
 import {toggleSwitch} from '../../actions/newsAction';
 
 const NavigationBar = (props) => {
-    console.log(props.isChecked);
 
     const loadOptions = (inputValue, callback) => {
         if (!inputValue) {

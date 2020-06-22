@@ -13,10 +13,11 @@ const parseGuardianNews = (articles) => {
             image: image,
             section: article.sectionId,
             date: article.webPublicationDate,
-            description: article.blocks.body[0].bodyTextSummary
+            description: article.blocks.body[0].bodyTextSummary,
+            share: article.webUrl
         };
     });
-}
+};
 
 const parseNytimes = (articles) => {
     return articles.map((article) => {
@@ -33,10 +34,11 @@ const parseNytimes = (articles) => {
             image: image ? image.url : null,
             section: article.section,
             date: article.published_date,
-            description: article.abstract
+            description: article.abstract,
+            share: article.url
         };
-    });
-}
+    }).slice(0, Math.min(10, articles.length));
+};
 
 module.exports = {
     parseGuardianNews: parseGuardianNews,
