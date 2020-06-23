@@ -16,12 +16,16 @@ import {
     TwitterShareButton, TwitterIcon,
     EmailShareButton, EmailIcon
 } from 'react-share';
+import {NavLink} from 'react-router-dom';
 
 const HeadlineItem = (props) => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleShow = (event) => {
+        event.preventDefault();
+        setShow(true);
+    }
 
     const image = (props.article.image) ? props.article.image :
         (props.isChecked) ? GuardianDefault : NytimesDefault;
@@ -32,27 +36,32 @@ const HeadlineItem = (props) => {
     return (
         <React.Fragment>
             <Card className="shadow-sm p-3 mb-5 bg-white rounded">
-                <Row>
-                    <Col xs={12} lg={3}>
-                        <Card.Img src={image}/>
-                    </Col>
-                    <Col xs={12} lg={9}>
-                        <Card.Body>
-                            <Card.Title>{props.article.title}<MdShare
-                                onClick={handleShow}/></Card.Title>
-                            <Card.Text>
-                                <Shiitake lines={3}>
-                                    {props.article.description}
-                                </Shiitake>
-                            </Card.Text>
-                            <Moment
-                                format="YYYY-MM-DD">{props.article.date}</Moment>
-                            <h5 className="float-right"><Badge
-                                className={classes[`${style}`]}>{section.toUpperCase()}</Badge>
-                            </h5>
-                        </Card.Body>
-                    </Col>
-                </Row>
+                <NavLink exact
+                         to={`/${section}/article?id=${props.article.article}`}
+                         className={classes.link}>
+                    <Row>
+                        <Col xs={12} lg={3}>
+                            <Card.Img src={image}/>
+                        </Col>
+                        <Col xs={12} lg={9}>
+                            <Card.Body>
+                                <Card.Title>{props.article.title}
+                                    <MdShare onClick={handleShow}/>
+                                </Card.Title>
+                                <Card.Text>
+                                    <Shiitake lines={3}>
+                                        {props.article.description}
+                                    </Shiitake>
+                                </Card.Text>
+                                <Moment
+                                    format="YYYY-MM-DD">{props.article.date}</Moment>
+                                <h5 className="float-right"><Badge
+                                    className={classes[`${style}`]}>{section.toUpperCase()}</Badge>
+                                </h5>
+                            </Card.Body>
+                        </Col>
+                    </Row>
+                </NavLink>
             </Card>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>

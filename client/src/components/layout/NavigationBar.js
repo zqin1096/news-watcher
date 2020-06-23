@@ -62,18 +62,23 @@ const NavigationBar = (props) => {
                              className={classes.link}
                              activeClassName={classes.selected}>Home</NavLink>
                     <NavLink to="/world"
+                             exact
                              className={classes.link}
                              activeClassName={classes.selected}>World</NavLink>
                     <NavLink to="/politics"
+                             exact
                              className={classes.link}
                              activeClassName={classes.selected}>Politics</NavLink>
-                    <NavLink to="business"
+                    <NavLink to="/business"
+                             exact
                              className={classes.link}
                              activeClassName={classes.selected}>Business</NavLink>
                     <NavLink to="/technology"
+                             exact
                              className={classes.link}
                              activeClassName={classes.selected}>Technology</NavLink>
                     <NavLink to="/sports"
+                             exact
                              className={classes.link}
                              activeClassName={classes.selected}>Sports</NavLink>
                 </Nav>

@@ -5,6 +5,7 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import store from './store';
 import {Provider} from 'react-redux';
 import Headlines from './components/headline/Headlines';
+import Article from './components/article/Article';
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
                 <NavigationBar/>
                 <Switch>
                     <Route exact path="/:section?" component={Headlines}/>
+                    <Route exact path="/:section/article" component={Article}/>
                 </Switch>
             </Router>
         </Provider>

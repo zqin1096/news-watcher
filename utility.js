@@ -14,7 +14,8 @@ const parseGuardianNews = (articles) => {
             section: article.sectionId,
             date: article.webPublicationDate,
             description: article.blocks.body[0].bodyTextSummary,
-            share: article.webUrl
+            share: article.webUrl,
+            article: article.id
         };
     });
 };
@@ -35,7 +36,8 @@ const parseNytimes = (articles) => {
             section: article.section,
             date: article.published_date,
             description: article.abstract,
-            share: article.url
+            share: article.url,
+            article: article.url
         };
     }).slice(0, Math.min(10, articles.length));
 };
