@@ -45,7 +45,8 @@ const HeadlineItem = (props) => {
                         </Col>
                         <Col xs={12} lg={9}>
                             <Card.Body>
-                                <Card.Title>{props.article.title}
+                                <Card.Title
+                                    className="font-italic">{props.article.title}
                                     <MdShare onClick={handleShow}/>
                                 </Card.Title>
                                 <Card.Text>
@@ -53,8 +54,8 @@ const HeadlineItem = (props) => {
                                         {props.article.description}
                                     </Shiitake>
                                 </Card.Text>
-                                <Moment
-                                    format="YYYY-MM-DD">{props.article.date}</Moment>
+                                <Moment className="font-italic"
+                                        format="YYYY-MM-DD">{props.article.date}</Moment>
                                 <h5 className="float-right"><Badge
                                     className={classes[`${style}`]}>{section.toUpperCase()}</Badge>
                                 </h5>
@@ -76,14 +77,12 @@ const HeadlineItem = (props) => {
                                 <FacebookIcon round={true}/>
                             </FacebookShareButton>
                         </Col>
-
                         <Col className="d-flex justify-content-center">
                             <TwitterShareButton url={props.article.share}
                                                 hashtags={["CSCI_571_NewsApp"]}>
                                 <TwitterIcon round={true}/>
                             </TwitterShareButton>
                         </Col>
-
                         <Col className="d-flex justify-content-center">
                             <EmailShareButton url={props.article.share}
                                               subject="#CSCI_571_NewsApp">

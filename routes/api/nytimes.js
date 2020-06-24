@@ -38,4 +38,21 @@ router.get('/:section', async (req, res) => {
     }
 });
 
+// Get api/nytimes/article/content
+// Get the article by ID from the Guardian News.
+router.get('/article/content', async (req, res) => {
+    try {
+        const article = await fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?fq=web_url:("${req.query.id}")&api-key=${config.get('nytimesKey')}`);
+        if (article.status === 200) {
+            const data = await article.json();
+            return res.json(utility.parseNytimesArticle(data.response));
+        } else {
+            return res.json(null);
+        }
+    } catch (e) {
+        console.log(e.message);
+        res.status(500).send('Server error');
+    }
+});
+
 module.exports = router;

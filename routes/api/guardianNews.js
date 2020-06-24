@@ -39,4 +39,21 @@ router.get('/:section', async (req, res) => {
     }
 });
 
+// Get api/guardian/article/content
+// Get the article by ID from the Guardian News.
+router.get('/article/content', async (req, res) => {
+    try {
+        const article = await fetch(`https://content.guardianapis.com/${req.query.id}?api-key=${config.get('guardianNewsKey')}&show-blocks=all`);
+        if (article.status === 200) {
+            const data = await article.json();
+            return res.json(utility.parseGuardianNewsArticle(data.response));
+        } else {
+            return res.json(null);
+        }
+    } catch (e) {
+        console.log(e.message);
+        res.status(500).send('Server error');
+    }
+});
+
 module.exports = router;

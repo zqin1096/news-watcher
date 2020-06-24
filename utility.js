@@ -20,6 +20,23 @@ const parseGuardianNews = (articles) => {
     });
 };
 
+const parseGuardianNewsArticle = (article) => {
+    const content = article.hasOwnProperty('content') && article.content ? article.content : null;
+    const blocks = content && content.hasOwnProperty('blocks') && content.blocks ? content.blocks : null;
+    const main = blocks && blocks.hasOwnProperty('main') && blocks.main ? blocks.main : null;
+    const elements = main && main.hasOwnProperty('elements') && main.elements ? main.elements : null;
+    const assets = elements && elements[0].hasOwnProperty('assets') && elements[0].assets ? elements[0].assets : null;
+    const asset = assets && assets.length > 0 ? assets[assets.length - 1] : null;
+    const image = asset && asset.hasOwnProperty('file') && asset.file ? asset.file : null;
+    return {
+        title: article.content.webTitle,
+        image: image,
+        date: article.content.webPublicationDate,
+        description: article.content.blocks.body[0].bodyTextSummary,
+        share: article.content.webUrl
+    };
+};
+
 const parseNytimes = (articles) => {
     return articles.map((article) => {
         const multimedia = article.hasOwnProperty('multimedia') && article.multimedia ?
@@ -42,7 +59,27 @@ const parseNytimes = (articles) => {
     }).slice(0, Math.min(10, articles.length));
 };
 
+const parseNytimesArticle = (article) => {
+    const multimedia = article.docs[0].hasOwnProperty('multimedia') && article.docs[0].multimedia ?
+        article.docs[0].multimedia : null;
+    let image = null;
+    if (multimedia) {
+        image = multimedia.find((element) => {
+            return element.url && element.width && element.width >= 2000;
+        });
+    }
+    return {
+        title: article.docs[0].headline.main,
+        image: image ? `https://nyt.com/${image.url}` : null,
+        date: article.docs[0].pub_date,
+        description: article.docs[0].abstract,
+        share: article.docs[0].web_url
+    };
+};
+
 module.exports = {
     parseGuardianNews: parseGuardianNews,
-    parseNytimes: parseNytimes
+    parseGuardianNewsArticle: parseGuardianNewsArticle,
+    parseNytimes: parseNytimes,
+    parseNytimesArticle: parseNytimesArticle
 };

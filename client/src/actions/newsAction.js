@@ -1,11 +1,39 @@
 import axios from 'axios';
 import {
-    GET_ARTICLES, SET_CHECKED, SET_LOADING
+    GET_ARTICLES,
+    GET_ARTICLE,
+    SET_CHECKED,
+    SET_LOADING
 } from './types';
 
 export const setLoading = () => {
     return {
         type: SET_LOADING
+    };
+};
+
+export const getArticle = (id, isChecked) => {
+    return async (dispatch) => {
+        const config = {
+            params: {
+                id: id
+            }
+        };
+        try {
+            dispatch(setLoading());
+            let res;
+            if (isChecked) {
+                res = await axios.get('/api/guardian/article/content', config);
+            } else {
+                res = await axios.get('/api/nytimes/article/content', config);
+            }
+            dispatch({
+                type: GET_ARTICLE,
+                payload: res.data
+            });
+        } catch (e) {
+
+        }
     };
 };
 
