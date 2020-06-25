@@ -26,30 +26,41 @@ import NytimesDefault from '../layout/nytimes_default.jpg';
 const Article = (props) => {
     const [showArrow, setShowArrow] = useState(false);
     const [expanded, setExpanded] = useState(false);
-    const [lines, setLines] = useState(6);
+    const [lines, setLines] = useState(4);
+    const [truncated, setTruncated] = useState(false);
+
+    const [dimensions, setDimensions] = useState({
+        height: window.innerHeight,
+        width: window.innerWidth
+    });
+    useEffect(() => {
+        const handleResize = () => {
+            setShowArrow(truncated);
+            setLines(4);
+            setExpanded(false);
+            setDimensions({
+                height: window.innerHeight,
+                width: window.innerWidth
+            })
+        }
+        window.addEventListener('resize', handleResize);
+        return _ => {
+            window.removeEventListener('resize', handleResize)
+
+        };
+    });
 
     let query = new URLSearchParams(useLocation().search);
     useEffect(() => {
         props.getArticle(query.get('id'), props.news.isChecked);
     }, [query.get('id')]);
 
-    const resetLines = () => {
-        setLines(6);
-        setExpanded(false);
-        setShowArrow(false);
-    }
-
-    useEffect(() => {
-        window.addEventListener("resize", resetLines);
-        return () => window.removeEventListener('resize', resetLines);
-    }, []);
-
     const onClick = () => {
         setExpanded(!expanded);
-        if (lines === 6) {
+        if (lines === 4) {
             setLines(100);
         } else {
-            setLines(6);
+            setLines(4);
         }
     };
     return (
@@ -126,6 +137,7 @@ const Article = (props) => {
                                         <Card.Text>
                                             <Shiitake lines={lines}
                                                       onTruncationChange={(isTruncated) => {
+                                                          setTruncated(isTruncated);
                                                           setShowArrow(isTruncated || expanded);
                                                       }}>
                                                 {props.news.article.description}
