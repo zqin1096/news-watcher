@@ -22,21 +22,23 @@ import {MdExpandMore} from 'react-icons/md';
 import {IconContext} from 'react-icons';
 import GuardianDefault from '../layout/guardian_default.png';
 import NytimesDefault from '../layout/nytimes_default.jpg';
+import * as Scroll from 'react-scroll';
 
 const Article = (props) => {
     const [showArrow, setShowArrow] = useState(false);
     const [expanded, setExpanded] = useState(false);
-    const [lines, setLines] = useState(4);
+    const [lines, setLines] = useState(20);
     const [truncated, setTruncated] = useState(false);
 
-    const [dimensions, setDimensions] = useState({
+    const [, setDimensions] = useState({
         height: window.innerHeight,
         width: window.innerWidth
     });
+    // Reset states on window resize.
     useEffect(() => {
         const handleResize = () => {
             setShowArrow(truncated);
-            setLines(4);
+            setLines(20);
             setExpanded(false);
             setDimensions({
                 height: window.innerHeight,
@@ -57,10 +59,16 @@ const Article = (props) => {
 
     const onClick = () => {
         setExpanded(!expanded);
-        if (lines === 4) {
+        if (lines === 20) {
             setLines(100);
         } else {
-            setLines(4);
+            // Scroll to the top.
+            Scroll.animateScroll.scrollToTop({
+                duration: 1000
+            });
+            setTimeout(() => {
+                setLines(20);
+            }, 1000);
         }
     };
     return (
@@ -133,24 +141,30 @@ const Article = (props) => {
                                             GuardianDefault : NytimesDefault}/>
                                 </Row>
                                 <Row className="px-2">
-                                    {
-                                        <Card.Text>
-                                            <Shiitake lines={lines}
-                                                      onTruncationChange={(isTruncated) => {
-                                                          setTruncated(isTruncated);
-                                                          setShowArrow(isTruncated || expanded);
-                                                      }}>
-                                                {props.news.article.description}
-                                            </Shiitake>
-                                        </Card.Text>
-                                    }
+                                    <Scroll.Element name="descTop"/>
+                                    <Card.Text>
+                                        <Shiitake lines={lines}
+                                                  onTruncationChange={(isTruncated) => {
+                                                      setTruncated(isTruncated);
+                                                      setShowArrow(isTruncated || expanded);
+                                                  }}>
+                                            {props.news.article.description}
+                                        </Shiitake>
+                                    </Card.Text>
+                                    <Scroll.Element name="descBot"/>
                                 </Row>
                                 <Row className="px-3">
                                     {!showArrow ? null : !expanded ?
                                         <IconContext.Provider
                                             value={{size: '2em'}}>
-                                            <MdExpandMore className="ml-auto"
-                                                          onClick={onClick}/>
+                                            <Scroll.Link to="descBot" spy={true}
+                                                         smooth={true}
+                                                         offset={50}
+                                                         duration={1000}
+                                                         className="ml-auto">
+                                                <MdExpandMore
+                                                    onClick={onClick}/>
+                                            </Scroll.Link>
                                         </IconContext.Provider> :
                                         <IconContext.Provider
                                             value={{size: '2em'}}>
@@ -169,7 +183,8 @@ const Article = (props) => {
 };
 
 Article.propTypes = {
-    news: PropTypes.object.isRequired
+    news: PropTypes.object.isRequired,
+    getArticle: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {

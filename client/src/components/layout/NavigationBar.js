@@ -12,6 +12,7 @@ import axios from 'axios';
 import classes from './NavigationBar.module.css';
 import {connect} from 'react-redux';
 import {toggleSwitch} from '../../actions/newsAction';
+import PropTypes from 'prop-types';
 
 const NavigationBar = (props) => {
 
@@ -107,6 +108,11 @@ const NavigationBar = (props) => {
         </Navbar>
     )
 };
+
+NavigationBar.propTypes = {
+    isChecked: PropTypes.bool.isRequired,
+    toggleSwitch: PropTypes.func.isRequired
+}
 
 const mapStateToProps = (state) => {
     return {
