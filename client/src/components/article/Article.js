@@ -23,6 +23,7 @@ import {IconContext} from 'react-icons';
 import GuardianDefault from '../layout/guardian_default.png';
 import NytimesDefault from '../layout/nytimes_default.jpg';
 import * as Scroll from 'react-scroll';
+import Comment from './Comment';
 
 const Article = (props) => {
     const [showArrow, setShowArrow] = useState(false);
@@ -43,12 +44,11 @@ const Article = (props) => {
             setDimensions({
                 height: window.innerHeight,
                 width: window.innerWidth
-            })
-        }
+            });
+        };
         window.addEventListener('resize', handleResize);
         return _ => {
-            window.removeEventListener('resize', handleResize)
-
+            window.removeEventListener('resize', handleResize);
         };
     });
 
@@ -175,6 +175,7 @@ const Article = (props) => {
                                 </Row>
                             </Card.Body>
                         </Card>
+                        <Comment id={query.get('id')}/>
                     </Container>
                 ) : <Container fluid>
                     <h1>The page cannot be found</h1>
