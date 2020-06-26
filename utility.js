@@ -15,7 +15,8 @@ const parseGuardianNews = (articles) => {
             date: article.webPublicationDate,
             description: article.blocks.body[0].bodyTextSummary,
             share: article.webUrl,
-            article: article.id
+            article: article.id,
+            source: 'guardian'
         };
     });
 };
@@ -59,9 +60,9 @@ const parseNytimes = (articles) => {
     }).slice(0, Math.min(10, articles.length));
 };
 
-const parseNytimesArticle = (article) => {
-    const multimedia = article.docs[0].hasOwnProperty('multimedia') && article.docs[0].multimedia ?
-        article.docs[0].multimedia : null;
+const parseNytimesArticle = (article, index = 0) => {
+    const multimedia = article.docs[index].hasOwnProperty('multimedia') && article.docs[index].multimedia ?
+        article.docs[index].multimedia : null;
     let image = null;
     if (multimedia) {
         image = multimedia.find((element) => {
@@ -69,11 +70,14 @@ const parseNytimesArticle = (article) => {
         });
     }
     return {
-        title: article.docs[0].headline.main,
+        title: article.docs[index].headline.main,
         image: image ? `https://nyt.com/${image.url}` : null,
-        date: article.docs[0].pub_date,
-        description: article.docs[0].abstract,
-        share: article.docs[0].web_url
+        date: article.docs[index].pub_date,
+        description: article.docs[index].abstract,
+        share: article.docs[index].web_url,
+        article: article.docs[index].web_url,
+        section: article.docs[index].news_desk,
+        source: 'nytimes'
     };
 };
 

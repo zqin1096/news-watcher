@@ -6,6 +6,7 @@ import store from './store';
 import {Provider} from 'react-redux';
 import Headlines from './components/headline/Headlines';
 import Article from './components/article/Article';
+import Results from './components/result/Results';
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
                 <Switch>
                     <Route exact path="/:section?" component={Headlines}/>
                     <Route exact path="/:section/article" component={Article}/>
+                    <Route exact path="/news/search" component={Results}/>
                 </Switch>
             </Router>
         </Provider>

@@ -3,7 +3,8 @@ import {
     GET_ARTICLES,
     GET_ARTICLE,
     SET_CHECKED,
-    SET_LOADING
+    SET_LOADING,
+    SEARCH_ARTICLES
 } from './types';
 
 export const setLoading = () => {
@@ -63,6 +64,28 @@ export const getArticles = (section, isChecked) => {
                 type: GET_ARTICLES,
                 payload: payload
             });
+        } catch (e) {
+
+        }
+    };
+};
+
+export const searchArticles = (keyword) => {
+    return async (dispatch) => {
+        const config = {
+            params: {
+                keyword: keyword
+            }
+        };
+        try {
+            dispatch(setLoading());
+            const guardianNews = await axios.get('/api/search/guardian', config);
+            const nytimesNews = await axios.get('/api/search/nytimes', config);
+            const payload = guardianNews.data.concat(nytimesNews.data);
+            dispatch({
+                type: SEARCH_ARTICLES,
+                payload: payload
+            })
         } catch (e) {
 
         }

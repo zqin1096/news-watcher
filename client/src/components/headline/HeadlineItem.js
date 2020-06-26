@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col'
-import Badge from 'react-bootstrap/Badge'
+import Col from 'react-bootstrap/Col';
+import Badge from 'react-bootstrap/Badge';
 import GuardianDefault from '../layout/guardian_default.png';
 import NytimesDefault from '../layout/nytimes_default.jpg';
 import Shiitake from 'shiitake';
@@ -25,7 +25,7 @@ const HeadlineItem = (props) => {
     const handleShow = (event) => {
         event.preventDefault();
         setShow(true);
-    }
+    };
 
     const image = (props.article.image) ? props.article.image :
         (props.isChecked) ? GuardianDefault : NytimesDefault;

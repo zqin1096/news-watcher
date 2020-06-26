@@ -7,7 +7,7 @@ import {IconContext} from "react-icons"; // Used to style the react icons.
 import Switch from 'react-switch';
 // <Navlink> is a special version of the <Link> that will add styling attributes
 // to the rendered element when it matches the current URL.
-import {NavLink} from 'react-router-dom';
+import {NavLink, withRouter} from 'react-router-dom';
 import axios from 'axios';
 import classes from './NavigationBar.module.css';
 import {connect} from 'react-redux';
@@ -44,7 +44,7 @@ const NavigationBar = (props) => {
 
     // The react-select onChange event is fired when an option is selected.
     const onChange = (selectedOption) => {
-        console.log(selectedOption.value);
+        props.history.push(`/news/search?q=${selectedOption.value}`);
     };
 
     return (
@@ -120,4 +120,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {toggleSwitch})(NavigationBar);
+export default connect(mapStateToProps, {toggleSwitch})(withRouter(NavigationBar));

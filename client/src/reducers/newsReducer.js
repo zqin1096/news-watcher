@@ -1,6 +1,6 @@
 import {
     GET_ARTICLE,
-    GET_ARTICLES,
+    GET_ARTICLES, SEARCH_ARTICLES,
     SET_CHECKED,
     SET_LOADING
 } from '../actions/types';
@@ -27,6 +27,7 @@ export default (state = initialState, action) => {
                 loading: false
             }
         case GET_ARTICLES:
+        case SEARCH_ARTICLES:
             return {
                 ...state,
                 articles: action.payload,
