@@ -44,6 +44,7 @@ const NavigationBar = (props) => {
 
     // The react-select onChange event is fired when an option is selected.
     const onChange = (selectedOption) => {
+        // Need withRouter from react-router-dom.
         props.history.push(`/news/search?q=${selectedOption.value}`);
     };
 
@@ -90,18 +91,23 @@ const NavigationBar = (props) => {
                             <BsBookmark/>
                         </IconContext.Provider>
                     </Nav.Item>
-                    <Nav.Item className={classes.navItem}>NYTimes</Nav.Item>
-                    <Nav.Item className={classes.navItem}>
-                        <Switch
-                            checked={props.isChecked}
-                            onChange={(checked) => {
-                                props.toggleSwitch(checked);
-                            }}
-                            onColor="#4696EC"
-                            checkedIcon={false}
-                            uncheckedIcon={false}/>
-                    </Nav.Item>
-                    <Nav.Item className={classes.navItem}>Guardian</Nav.Item>
+                    {props.showSwitch &&
+                    <Nav>
+                        <Nav.Item className={classes.navItem}>NYTimes</Nav.Item>
+                        <Nav.Item className={classes.navItem}>
+                            <Switch
+                                checked={props.isChecked}
+                                onChange={(checked) => {
+                                    props.toggleSwitch(checked);
+                                }}
+                                onColor="#4696EC"
+                                checkedIcon={false}
+                                uncheckedIcon={false}/>
+                        </Nav.Item>
+                        <Nav.Item
+                            className={classes.navItem}>Guardian</Nav.Item>
+                    </Nav>
+                    }
                 </Nav>
             </Navbar.Collapse>
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
@@ -111,12 +117,14 @@ const NavigationBar = (props) => {
 
 NavigationBar.propTypes = {
     isChecked: PropTypes.bool.isRequired,
-    toggleSwitch: PropTypes.func.isRequired
+    showSwitch: PropTypes.bool.isRequired,
+    toggleSwitch: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => {
     return {
-        isChecked: state.news.isChecked
+        isChecked: state.news.isChecked,
+        showSwitch: state.navbar.showSwitch
     }
 }
 

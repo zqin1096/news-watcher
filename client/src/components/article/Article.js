@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import {useLocation} from 'react-router-dom';
 import {getArticle} from '../../actions/newsAction';
+import {setShowSwitch} from '../../actions/navbarAction';
 import Spinner from '../layout/Spinner';
 import Container from 'react-bootstrap/Container';
 import classes from './Article.module.css';
@@ -35,6 +36,9 @@ const Article = (props) => {
         height: window.innerHeight,
         width: window.innerWidth
     });
+    useEffect(() => {
+        props.setShowSwitch(false);
+    }, []);
     // Reset states on window resize.
     useEffect(() => {
         const handleResize = () => {
@@ -53,8 +57,11 @@ const Article = (props) => {
     });
 
     let query = new URLSearchParams(useLocation().search);
+    // When a ResultItem is clicked, its source is passed in and persisted
+    // to the location.
+    const isChecked = props.location.state ? (props.location.state.source === 'guardian') : (props.news.isChecked);
     useEffect(() => {
-        props.getArticle(query.get('id'), props.news.isChecked);
+        props.getArticle(query.get('id'), isChecked);
     }, [query.get('id')]);
 
     const onClick = () => {
@@ -194,4 +201,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps, {getArticle})(Article);
+export default connect(mapStateToProps, {getArticle, setShowSwitch})(Article);

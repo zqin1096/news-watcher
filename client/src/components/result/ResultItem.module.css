@@ -21,3 +21,13 @@
 .other {
     background: #6E757C;
 }
+
+.link {
+    text-decoration: none;
+    color: black;
+}
+
+.link:hover {
+    color: black;
+    text-decoration: none;
+}

@@ -15,12 +15,14 @@ import Moment from 'react-moment';
 import GuardianDefault from '../layout/guardian_default.png';
 import NytimesDefault from '../layout/nytimes_default.jpg';
 import Container from 'react-bootstrap/Container';
+import {NavLink} from 'react-router-dom';
 
 const ResultItem = (props) => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = (event) => {
+        event.preventDefault();
         setShow(true);
     };
 
@@ -33,22 +35,30 @@ const ResultItem = (props) => {
         <Col xs={12} lg={3} className="p-2">
             <React.Fragment>
                 <Card className="shadow">
-                    <Card.Body>
-                        <Card.Title
-                            className="font-italic">{props.article.title}
-                            <MdShare onClick={handleShow}/>
-                        </Card.Title>
-                        <Container fluid
-                                   className="border rounded mt-1 mb-3 px-1 py-1">
-                            <Card.Img src={image}/>
-                        </Container>
+                    <NavLink exact
+                             to={{
+                                 pathname: `/${section}/article`,
+                                 search: `?id=${props.article.article}`,
+                                 state: {source: props.article.source}
+                             }}
+                             className={classes.link}>
+                        <Card.Body>
+                            <Card.Title
+                                className="font-italic">{props.article.title}
+                                <MdShare onClick={handleShow}/>
+                            </Card.Title>
+                            <Container fluid
+                                       className="border rounded mt-1 mb-3 px-1 py-1">
+                                <Card.Img src={image}/>
+                            </Container>
 
-                        <Moment className="font-italic"
-                                format="YYYY-MM-DD">{props.article.date}</Moment>
-                        <h5 className="float-right"><Badge
-                            className={classes[`${style}`]}>{section.toUpperCase()}</Badge>
-                        </h5>
-                    </Card.Body>
+                            <Moment className="font-italic"
+                                    format="YYYY-MM-DD">{props.article.date}</Moment>
+                            <h5 className="float-right"><Badge
+                                className={classes[`${style}`]}>{section.toUpperCase()}</Badge>
+                            </h5>
+                        </Card.Body>
+                    </NavLink>
                 </Card>
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>

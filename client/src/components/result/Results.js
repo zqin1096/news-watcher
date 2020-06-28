@@ -5,10 +5,14 @@ import Spinner from '../layout/Spinner';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {searchArticles} from '../../actions/newsAction';
+import {setShowSwitch} from '../../actions/navbarAction';
 import Row from 'react-bootstrap/Row';
 import ResultItem from './ResultItem';
 
 const Results = (props) => {
+    useEffect(() => {
+        props.setShowSwitch(false);
+    });
     let query = new URLSearchParams(useLocation().search);
     useEffect(() => {
         props.searchArticles(query.get('q'));
@@ -40,4 +44,7 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {searchArticles})(Results);
+export default connect(mapStateToProps, {
+    searchArticles,
+    setShowSwitch
+})(Results);
