@@ -57,9 +57,9 @@ const Article = (props) => {
     });
 
     let query = new URLSearchParams(useLocation().search);
-    // When a ResultItem is clicked, its source is passed in and persisted
-    // to the location.
-    const isChecked = props.location.state ? (props.location.state.source === 'guardian') : (props.news.isChecked);
+    // When a ResultItem/HeadlineItem is clicked, its source is passed in and
+    // persisted to the location.
+    const isChecked = props.location.state.source === 'guardian';
     useEffect(() => {
         props.getArticle(query.get('id'), isChecked);
     }, [query.get('id')]);
@@ -144,7 +144,7 @@ const Article = (props) => {
                                 </Row>
                                 <Row className="py-2 px-2">
                                     <Card.Img src={props.news.article.image ?
-                                        props.news.article.image : props.news.isChecked ?
+                                        props.news.article.image : isChecked ?
                                             GuardianDefault : NytimesDefault}/>
                                 </Row>
                                 <Row className="px-2">
@@ -192,7 +192,8 @@ const Article = (props) => {
 
 Article.propTypes = {
     news: PropTypes.object.isRequired,
-    getArticle: PropTypes.func.isRequired
+    getArticle: PropTypes.func.isRequired,
+    setShowSwitch: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {

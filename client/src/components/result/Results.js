@@ -35,7 +35,8 @@ const Results = (props) => {
 
 Results.propTypes = {
     news: PropTypes.object.isRequired,
-    searchArticles: PropTypes.func.isRequired
+    searchArticles: PropTypes.func.isRequired,
+    setShowSwitch: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {

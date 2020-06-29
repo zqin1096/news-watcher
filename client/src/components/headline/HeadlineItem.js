@@ -37,7 +37,11 @@ const HeadlineItem = (props) => {
         <React.Fragment>
             <Card className="shadow-sm p-3 mb-5 bg-white rounded">
                 <NavLink exact
-                         to={`/${section}/article?id=${props.article.article}`}
+                         to={{
+                             pathname: `/${section}/article`,
+                             search: `?id=${props.article.article}`,
+                             state: {source: props.article.source}
+                         }}
                          className={classes.link}>
                     <Row>
                         <Col xs={12} lg={3}>

@@ -55,7 +55,8 @@ const parseNytimes = (articles) => {
             date: article.published_date,
             description: article.abstract,
             share: article.url,
-            article: article.url
+            article: article.url,
+            source: 'nytimes'
         };
     }).slice(0, Math.min(10, articles.length));
 };

@@ -46,7 +46,8 @@ const Headlines = (props) => {
 
 Headlines.propTypes = {
     news: PropTypes.object.isRequired,
-    getArticles: PropTypes.func.isRequired
+    getArticles: PropTypes.func.isRequired,
+    setShowSwitch: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {
