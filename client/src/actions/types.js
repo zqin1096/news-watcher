@@ -4,3 +4,6 @@ export const SET_LOADING = 'SET_LOADING';
 export const SET_CHECKED = 'SET_CHECKED';
 export const SEARCH_ARTICLES = 'SEARCH_ARTICLES';
 export const SET_SHOW_SWITCH = 'SET_SHOW_SWITCH';
+export const ADD_BOOKMARK = 'ADD_BOOKMARK';
+export const REMOVE_BOOKMARK = 'REMOVE_BOOKMARK';
+export const SET_BOOKMARK_TAB = 'SET_BOOKMARK_TAB';

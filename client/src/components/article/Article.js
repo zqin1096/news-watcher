@@ -5,6 +5,7 @@ import Card from 'react-bootstrap/Card';
 import {useLocation} from 'react-router-dom';
 import {getArticle} from '../../actions/newsAction';
 import {setShowSwitch} from '../../actions/navbarAction';
+import {setBookmarkTab} from '../../actions/bookmarkAction';
 import Spinner from '../layout/Spinner';
 import Container from 'react-bootstrap/Container';
 import classes from './Article.module.css';
@@ -25,6 +26,7 @@ import GuardianDefault from '../layout/guardian_default.png';
 import NytimesDefault from '../layout/nytimes_default.jpg';
 import * as Scroll from 'react-scroll';
 import Comment from './Comment';
+import {BsBookmark, BsBookmarkFill} from 'react-icons/bs';
 
 const Article = (props) => {
     const [showArrow, setShowArrow] = useState(false);
@@ -38,6 +40,7 @@ const Article = (props) => {
     });
     useEffect(() => {
         props.setShowSwitch(false);
+        props.setBookmarkTab(false);
     }, []);
     // Reset states on window resize.
     useEffect(() => {
@@ -67,7 +70,7 @@ const Article = (props) => {
     const onClick = () => {
         setExpanded(!expanded);
         if (lines === 20) {
-            setLines(100);
+            setLines(200);
         } else {
             // Scroll to the top.
             Scroll.animateScroll.scrollToTop({
@@ -193,7 +196,8 @@ const Article = (props) => {
 Article.propTypes = {
     news: PropTypes.object.isRequired,
     getArticle: PropTypes.func.isRequired,
-    setShowSwitch: PropTypes.func.isRequired
+    setShowSwitch: PropTypes.func.isRequired,
+    setBookmarkTab: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {
@@ -202,4 +206,8 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps, {getArticle, setShowSwitch})(Article);
+export default connect(mapStateToProps, {
+    getArticle,
+    setShowSwitch,
+    setBookmarkTab
+})(Article);

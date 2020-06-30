@@ -6,13 +6,15 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {searchArticles} from '../../actions/newsAction';
 import {setShowSwitch} from '../../actions/navbarAction';
+import {setBookmarkTab} from '../../actions/bookmarkAction';
 import Row from 'react-bootstrap/Row';
 import ResultItem from './ResultItem';
 
 const Results = (props) => {
     useEffect(() => {
         props.setShowSwitch(false);
-    });
+        props.setBookmarkTab(false);
+    }, []);
     let query = new URLSearchParams(useLocation().search);
     useEffect(() => {
         props.searchArticles(query.get('q'));
@@ -36,7 +38,8 @@ const Results = (props) => {
 Results.propTypes = {
     news: PropTypes.object.isRequired,
     searchArticles: PropTypes.func.isRequired,
-    setShowSwitch: PropTypes.func.isRequired
+    setShowSwitch: PropTypes.func.isRequired,
+    setBookmarkTab: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {
@@ -47,5 +50,6 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
     searchArticles,
-    setShowSwitch
+    setShowSwitch,
+    setBookmarkTab
 })(Results);

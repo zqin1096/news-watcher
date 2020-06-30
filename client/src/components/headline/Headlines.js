@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {getArticles} from '../../actions/newsAction';
 import {setShowSwitch} from '../../actions/navbarAction';
+import {setBookmarkTab} from '../../actions/bookmarkAction';
 import Spinner from '../layout/Spinner';
 import Container from 'react-bootstrap/Container';
 import HeadlineItem from './HeadlineItem';
@@ -11,6 +12,7 @@ import classes from './Headlines.module.css';
 const Headlines = (props) => {
     useEffect(() => {
         props.setShowSwitch(true);
+        props.setBookmarkTab(false);
     }, []);
     const {section} = props.match.params;
     useEffect(() => {
@@ -47,7 +49,8 @@ const Headlines = (props) => {
 Headlines.propTypes = {
     news: PropTypes.object.isRequired,
     getArticles: PropTypes.func.isRequired,
-    setShowSwitch: PropTypes.func.isRequired
+    setShowSwitch: PropTypes.func.isRequired,
+    setBookmarkTab: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {
@@ -58,5 +61,6 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
     getArticles,
-    setShowSwitch
+    setShowSwitch,
+    setBookmarkTab
 })(Headlines);

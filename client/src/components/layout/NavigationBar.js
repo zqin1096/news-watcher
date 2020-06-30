@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import AsyncSelect from 'react-select/async';
-import {BsBookmark} from 'react-icons/bs'; // Bookmark icon.
+import {BsBookmark, BsBookmarkFill} from 'react-icons/bs'; // Bookmark icon.
 import {IconContext} from "react-icons"; // Used to style the react icons.
 import Switch from 'react-switch';
 // <Navlink> is a special version of the <Link> that will add styling attributes
@@ -13,8 +13,13 @@ import classes from './NavigationBar.module.css';
 import {connect} from 'react-redux';
 import {toggleSwitch} from '../../actions/newsAction';
 import PropTypes from 'prop-types';
+import ReactTooltip from 'react-tooltip';
+
 
 const NavigationBar = (props) => {
+    useEffect(() => {
+        ReactTooltip.rebuild();
+    }, [props.isInBookmarkTab]);
 
     const loadOptions = (inputValue, callback) => {
         if (!inputValue) {
@@ -86,10 +91,27 @@ const NavigationBar = (props) => {
                 </Nav>
                 <Nav>
                     <Nav.Item className={classes.navItem}>
-                        <IconContext.Provider
-                            value={{color: 'white', size: '1.5em'}}>
-                            <BsBookmark/>
-                        </IconContext.Provider>
+                        <NavLink
+                            to="/news/favorites"
+                            exact>
+                            {props.isInBookmarkTab ?
+                                <IconContext.Provider
+                                    value={{color: 'white', size: '1.5em'}}>
+                                    <BsBookmarkFill data-for="bookmarkFill"
+                                                    data-tip="Bookmark"/>
+                                    <ReactTooltip id="bookmarkFill"
+                                                  place="bottom" type="dark"
+                                                  effect="solid"/>
+                                </IconContext.Provider> :
+                                <IconContext.Provider
+                                    value={{color: 'white', size: '1.5em'}}>
+                                    <BsBookmark data-for="bookmarkNotFill"
+                                                data-tip="Bookmark"/>
+                                    <ReactTooltip id="bookmarkNotFill"
+                                                  place="bottom" type="dark"
+                                                  effect="solid"/>
+                                </IconContext.Provider>}
+                        </NavLink>
                     </Nav.Item>
                     {props.showSwitch &&
                     <Nav>
@@ -118,13 +140,15 @@ const NavigationBar = (props) => {
 NavigationBar.propTypes = {
     isChecked: PropTypes.bool.isRequired,
     showSwitch: PropTypes.bool.isRequired,
+    isInBookmarkTab: PropTypes.bool.isRequired,
     toggleSwitch: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => {
     return {
         isChecked: state.news.isChecked,
-        showSwitch: state.navbar.showSwitch
+        showSwitch: state.navbar.showSwitch,
+        isInBookmarkTab: state.bookmark.isInBookmarkTab
     }
 }
 
