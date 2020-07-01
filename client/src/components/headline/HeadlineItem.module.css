@@ -22,6 +22,14 @@
     background: #6E757C;
 }
 
+.world, .politics, .business, .other {
+    color: white;
+}
+
+.technology, .sports {
+    color: black;
+}
+
 .link {
     text-decoration: none;
     color: black;

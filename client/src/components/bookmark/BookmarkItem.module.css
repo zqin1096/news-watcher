@@ -1,0 +1,83 @@
+.world {
+    background: #7C4EFF;
+}
+
+.politics {
+    background: #419488;
+}
+
+.business {
+    background: #4696EC;
+}
+
+.technology {
+    background: #CEDC39;
+}
+
+.sports {
+    background: #F6C244;
+}
+
+.other {
+    background: #6E757C;
+}
+
+.guardian {
+    background: #14284A;
+}
+
+.nytimes {
+    background: #DDDDDD;
+}
+
+.world, .politics, .business, .other, .guardian {
+    color: white;
+}
+
+.technology, .sports, .nytimes {
+    color: black;
+}
+
+.link {
+    text-decoration: none;
+    color: black;
+}
+
+.link:hover {
+    color: black;
+    text-decoration: none;
+}
+
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale3d(.3, .3, .3);
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+.zoomIn {
+    animation-name: zoomIn;
+}
+
+@keyframes zoomOut {
+    from {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+        transform: scale3d(.3, .3, .3);
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+.zoomOut {
+    animation-name: zoomOut;
+}

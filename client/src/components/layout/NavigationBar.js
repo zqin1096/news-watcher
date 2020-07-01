@@ -15,7 +15,6 @@ import {toggleSwitch} from '../../actions/newsAction';
 import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
 
-
 const NavigationBar = (props) => {
     useEffect(() => {
         ReactTooltip.rebuild();

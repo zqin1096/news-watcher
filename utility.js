@@ -34,7 +34,10 @@ const parseGuardianNewsArticle = (article) => {
         image: image,
         date: article.content.webPublicationDate,
         description: article.content.blocks.body[0].bodyTextSummary,
-        share: article.content.webUrl
+        share: article.content.webUrl,
+        section: article.content.sectionId,
+        article: article.content.id,
+        source: 'guardian'
     };
 };
 

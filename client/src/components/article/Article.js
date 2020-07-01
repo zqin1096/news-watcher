@@ -27,6 +27,9 @@ import NytimesDefault from '../layout/nytimes_default.jpg';
 import * as Scroll from 'react-scroll';
 import Comment from './Comment';
 import {BsBookmark, BsBookmarkFill} from 'react-icons/bs';
+import {addBookmark, removeBookmark} from '../../actions/bookmarkAction';
+import {toast, cssTransition} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Article = (props) => {
     const [showArrow, setShowArrow] = useState(false);
@@ -81,6 +84,28 @@ const Article = (props) => {
             }, 1000);
         }
     };
+
+    const Zoom = cssTransition({
+        enter: classes.zoomIn,
+        exit: classes.zoomOut,
+        duration: 500
+    });
+    const addBookmarkToast = () => {
+        toast(`Saving ${props.news.article.title}`, {
+            transition: Zoom
+        });
+        props.addBookmark(props.news.article);
+    }
+    const removeBookmarkToast = () => {
+        toast(`Removing ${props.news.article.title}`, {
+            transition: Zoom
+        });
+        props.removeBookmark(props.news.article);
+    }
+
+    const isBookmarked = props.bookmark.favorites.find((favorite) => {
+        return favorite.share === props.news.article.share
+    });
     return (
         props.news.loading ?
             <Spinner/> :
@@ -144,6 +169,28 @@ const Article = (props) => {
                                             </EmailShareButton>
                                         </OverlayTrigger>
                                     </div>
+                                    <div className={classes.bookmark}>
+                                        <IconContext.Provider
+                                            value={{
+                                                color: 'red',
+                                                size: '1.5em'
+                                            }}>
+                                            <OverlayTrigger
+                                                placement="top"
+                                                overlay={
+                                                    <Tooltip>
+                                                        Bookmark
+                                                    </Tooltip>
+                                                }>
+                                                {isBookmarked ?
+                                                    <BsBookmarkFill
+                                                        onClick={removeBookmarkToast}/> :
+                                                    <BsBookmark
+                                                        onClick={addBookmarkToast}/>
+                                                }
+                                            </OverlayTrigger>
+                                        </IconContext.Provider>
+                                    </div>
                                 </Row>
                                 <Row className="py-2 px-2">
                                     <Card.Img src={props.news.article.image ?
@@ -195,19 +242,25 @@ const Article = (props) => {
 
 Article.propTypes = {
     news: PropTypes.object.isRequired,
+    bookmark: PropTypes.object.isRequired,
     getArticle: PropTypes.func.isRequired,
     setShowSwitch: PropTypes.func.isRequired,
-    setBookmarkTab: PropTypes.func.isRequired
+    setBookmarkTab: PropTypes.func.isRequired,
+    addBookmark: PropTypes.func.isRequired,
+    removeBookmark: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {
     return {
-        news: state.news
+        news: state.news,
+        bookmark: state.bookmark
     }
 };
 
 export default connect(mapStateToProps, {
     getArticle,
     setShowSwitch,
-    setBookmarkTab
+    setBookmarkTab,
+    addBookmark,
+    removeBookmark
 })(Article);

@@ -8,6 +8,7 @@ import Headlines from './components/headline/Headlines';
 import Article from './components/article/Article';
 import Results from './components/result/Results';
 import Bookmarks from './components/bookmark/Bookmarks';
+import {ToastContainer} from 'react-toastify';
 
 function App() {
     return (
@@ -21,6 +22,17 @@ function App() {
                     <Route exact path="/news/favorites" component={Bookmarks}/>
                 </Switch>
             </Router>
+            {/*Need to render the ToastContainer once in the application tree.*/}
+            <ToastContainer
+                position="top-center"
+                autoClose={2000}
+                hideProgressBar
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover/>
         </Provider>
     );
 }
