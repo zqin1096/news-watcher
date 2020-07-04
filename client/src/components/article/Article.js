@@ -32,6 +32,7 @@ import {toast, cssTransition} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Article = (props) => {
+    // Arrow for expanding the description of the article.
     const [showArrow, setShowArrow] = useState(false);
     const [expanded, setExpanded] = useState(false);
     const [lines, setLines] = useState(20);

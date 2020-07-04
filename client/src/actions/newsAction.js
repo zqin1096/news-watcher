@@ -13,6 +13,7 @@ export const setLoading = () => {
     };
 };
 
+// Get Nytimes or Guardian news depending on the value of switch.
 export const getArticle = (id, isChecked) => {
     return async (dispatch) => {
         const config = {
@@ -38,6 +39,7 @@ export const getArticle = (id, isChecked) => {
     };
 };
 
+// Get 10 articles of the specified section.
 export const getArticles = (section, isChecked) => {
     return async (dispatch) => {
         try {
@@ -70,6 +72,7 @@ export const getArticles = (section, isChecked) => {
     };
 };
 
+// Search articles depending on the keyword.
 export const searchArticles = (keyword) => {
     return async (dispatch) => {
         const config = {

@@ -56,6 +56,7 @@ const NavigationBar = (props) => {
         // expand is the breakpoint, below which, the Navbar will collapse.
         <Navbar expand="lg" className={classes.bg}>
             <AsyncSelect
+                value={null}
                 onChange={onChange}
                 cacheOptions
                 loadOptions={loadOptions}

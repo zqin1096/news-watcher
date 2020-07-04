@@ -4,6 +4,7 @@ import {
     SET_BOOKMARK_TAB
 } from './types';
 
+// Add an article to the bookmark.
 export const addBookmark = (article) => {
     return {
         type: ADD_BOOKMARK,
@@ -11,6 +12,7 @@ export const addBookmark = (article) => {
     };
 };
 
+// Remove the article from the bookmark.
 export const removeBookmark = (article) => {
     return {
         type: REMOVE_BOOKMARK,
@@ -18,6 +20,7 @@ export const removeBookmark = (article) => {
     };
 };
 
+// Set if the bookmark page is being viewed.
 export const setBookmarkTab = (isInBookmarkTab) => {
     return {
         type: SET_BOOKMARK_TAB,
